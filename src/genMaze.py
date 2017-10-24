@@ -56,12 +56,11 @@ def genMaze(x, y, n, m):
             plen = plen - 1
         else:
             plen = 1 << random.randint(1, 7)
-            aim_set = next_set.union(aim_set)
+            aim_set = next_set.union(tmp_set)
 
         nx, ny = random.sample(aim_set, 1)[0]
-        aim_set.discard((nx, ny))
-
         next_set = next_set.union(aim_set)
+        next_set.discard((nx, ny))
 
         if len(next_set) == 0:
             break
