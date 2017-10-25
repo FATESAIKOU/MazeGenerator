@@ -38,7 +38,6 @@ def isVisitable(x, y, n, m, maze):
     ])
 
     return lnk_cnt == 1
-    
 
 def genMaze(x, y, n, m):
     maze = np.zeros([n, m])
@@ -59,23 +58,25 @@ def genMaze(x, y, n, m):
             aim_set = next_set.union(tmp_set)
 
         nx, ny = random.sample(aim_set, 1)[0]
+
+        if isVisitable(nx, ny, n, m, maze):
+            maze[nx, ny] = 1
+
+            os.system('clear')
+            printMaze(35, 70, maze, ('  ', '##'), next_set, tmp_set)
+            print plen, tmp_set
+            time.sleep(0.1)
+
         next_set = next_set.union(aim_set)
         next_set.discard((nx, ny))
 
         if len(next_set) == 0:
             break
 
-        if isVisitable(nx, ny, n, m, maze):
-            maze[nx, ny] = 1
-
-            os.system('clear')
-            printMaze(35, 70, maze, ('  ', '##'))
-            print tmp_set, plen
-            time.sleep(0.1)
 
     return maze
 
-def printMaze(n, m, maze, draw_pair):
+def printMaze(n, m, maze, draw_pair, next_set, tmp_set):
     print " " + "_"*m*len(draw_pair[0]) + " "
     for i in range(n):
         s = "|"
@@ -83,10 +84,15 @@ def printMaze(n, m, maze, draw_pair):
             if maze[i, j] == 1:
                 s = s + draw_pair[0]
             else:
-                s = s + draw_pair[1]
+                if (i, j) in next_set:
+                    s = s + "\x1B[32m" + draw_pair[1] + "\x1B[37m"
+                elif (i, j) in tmp_set:
+                    s = s + "\x1B[31m" + draw_pair[1] + "\x1B[37m"
+                else:
+                    s = s + draw_pair[1]
+
         print s + "|"
     print " " + "-"*m*len(draw_pair[0]) + " "
-
 
 while True:
     genMaze(0, 0, 35, 70)
