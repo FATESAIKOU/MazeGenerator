@@ -32,9 +32,9 @@ def isVisitable(x, y, n, m, maze):
     ]
 
     lnk_cnt = sum([
-        maze[nx, ny] != 0
+        1
         for nx, ny in eles 
-        if -1 < nx < n and -1 < ny < m
+        if -1 < nx < n and -1 < ny < m and maze[nx, ny] != 0
     ])
 
     return lnk_cnt == 1 or (((n - 1, m - 1) in eles or (x, y) == (n - 1, m - 1)) and maze[n - 1, m - 1] == 0)
@@ -60,12 +60,15 @@ def genMaze(x, y, n, m):
         nx, ny = random.sample(aim_set, 1)[0]
 
         if isVisitable(nx, ny, n, m, maze):
-            maze[nx, ny] = 1 << random.randint(1, 10) / 8
+            if random.randint(1, 10) < 5:
+                maze[nx, ny] = 1
+            else:
+                maze[nx, ny] = 2
 
             #os.system('clear')
-            #printMaze(n, m, maze, ('  ', '##'), next_set, tmp_set)
+            #printMaze(n, m, maze, ('  ', '--', '##'), next_set, tmp_set)
             #print plen, tmp_set
-            #time.sleep(0.01)
+            #time.sleep(1)
 
         next_set = next_set.union(aim_set)
         next_set.discard((nx, ny))
@@ -89,9 +92,9 @@ def printMaze(n, m, maze, draw_pair, next_set, tmp_set):
                 s = s + draw_pair[1]
             else:
                 if (i, j) in next_set:
-                    s = s + "\x1B[32m" + draw_pair[1] + "\x1B[37m"
+                    s = s + "\x1B[32m" + draw_pair[2] + "\x1B[37m"
                 elif (i, j) in tmp_set:
-                    s = s + "\x1B[31m" + draw_pair[1] + "\x1B[37m"
+                    s = s + "\x1B[31m" + draw_pair[2] + "\x1B[37m"
                 else:
                     s = s + draw_pair[2]
 
@@ -99,4 +102,4 @@ def printMaze(n, m, maze, draw_pair, next_set, tmp_set):
     print s + " " + "-"*m*len(draw_pair[0]) + " "
 
 
-printMaze(10, 20, genMaze(0, 0, 10, 20), ('1', '2', '0'), set(), set())
+printMaze(5, 5, genMaze(0, 0, 5, 5), ('1', '2', '0'), set(), set())
