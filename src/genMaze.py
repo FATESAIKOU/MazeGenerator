@@ -65,11 +65,6 @@ def genMaze(x, y, n, m):
             else:
                 maze[nx, ny] = 2
 
-            #os.system('clear')
-            #printMaze(n, m, maze, ('  ', '--', '##'), next_set, tmp_set)
-            #print plen, tmp_set
-            #time.sleep(1)
-
         next_set = next_set.union(aim_set)
         next_set.discard((nx, ny))
 
@@ -102,4 +97,6 @@ def printMaze(n, m, maze, draw_pair, next_set, tmp_set):
     print s + " " + "-"*m*len(draw_pair[0]) + " "
 
 
-printMaze(5, 5, genMaze(0, 0, 5, 5), ('1', '2', '0'), set(), set())
+n = int(sys.argv[1])
+m = int(sys.argv[2])
+printMaze(n, m, genMaze(0, 0, n, m), ('1', '2', '0'), set(), set())
