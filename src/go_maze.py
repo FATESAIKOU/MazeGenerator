@@ -26,7 +26,7 @@ def loadMap(file_path):
     maze = np.zeros([n, m])
     for i in xrange(n):
         for j in xrange(m):
-            maze[i, j] = int(raw_maze[m + 3 + (n + 3) * i + (j + 1)])
+            maze[i, j] = int(raw_maze[m + 3 + (m + 3) * i + (j + 1)])
 
     return maze
 
@@ -56,6 +56,7 @@ def goMaze(maze, action_file):
         assert action in action_map.keys(), "\x1B[31m[Error]\x1B[37m Undefined Action"
         pos = action_map[action](pos)
         assert maze[tuple(pos)] != 0, "\x1B[31m[Error]\x1B[37m Action: " + action + ", not valid"
+        assert tuple(pos) not in path_set, "\x1B[31m[Error]\x1B[37m You can not go back"
 
         path_set.add(tuple(pos))
 
@@ -86,4 +87,3 @@ def printMaze(maze, draw_pair, path_set):
 
 maze = loadMap(sys.argv[1])
 goMaze(maze, sys.argv[2])
-
