@@ -74,7 +74,9 @@ def genMaze(x, y, n, m):
 
     return maze
 
-def printMaze(n, m, maze, draw_pair, next_set, tmp_set):
+def printMaze(maze, draw_pair, next_set, tmp_set):
+    n, m = maze.shape
+
     print " " + "_"*m*len(draw_pair[0]) + " "
 
     s = ""
@@ -99,4 +101,4 @@ def printMaze(n, m, maze, draw_pair, next_set, tmp_set):
 
 n = int(sys.argv[1])
 m = int(sys.argv[2])
-printMaze(n, m, genMaze(0, 0, n, m), ('1', '2', '0'), set(), set())
+printMaze(genMaze(0, 0, n, m), ('1', '2', '0'), set(), set())
