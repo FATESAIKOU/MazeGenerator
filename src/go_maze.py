@@ -43,6 +43,7 @@ def goMaze(maze, action_file):
 
     path_set = set()
     path_set.add(tuple(pos))
+    coin = 0
     while True:
         os.system('clear')
         printMaze(maze, ['  ', '--', '##', 'XD'], path_set)
@@ -55,12 +56,18 @@ def goMaze(maze, action_file):
 
         assert action in action_map.keys(), "\x1B[31m[Error]\x1B[37m Undefined Action"
         pos = action_map[action](pos)
+
         assert maze[tuple(pos)] != 0, "\x1B[31m[Error]\x1B[37m Action: " + action + ", not valid"
         assert tuple(pos) not in path_set, "\x1B[31m[Error]\x1B[37m You can not go back"
 
+        if maze[tuple(pos)] == 2:
+            coin += 1
+
         path_set.add(tuple(pos))
 
-    assert (pos[0] - 1, pos[1] - 1) == maze.shape, "\x1B[31m[Error]\x1B[37m " + str(pos) + " is not the goal"
+    assert (pos[0] + 1, pos[1] + 1) == maze.shape, "\x1B[31m[Error]\x1B[37m " + str(pos) + " is not the goal"
+
+    print "Total coin: ", coin
 
 
 def printMaze(maze, draw_pair, path_set):
