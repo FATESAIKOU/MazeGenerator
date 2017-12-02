@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 This is a program to slove maze-problem.
 
@@ -10,13 +11,9 @@ This is a program to slove maze-problem.
 @author: FATESAIKOU
 """
 
-import os
 import sys
-import time
-import copy
 import numpy as np
 
-from pprint import pprint
 from collections import deque
 
 

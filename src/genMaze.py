@@ -1,9 +1,10 @@
+#!/usr/bin/env python
+
 import random
-import os
 import sys
-import numpy as np
+import os
 import time
-from pprint import pprint
+import numpy as np
 
 
 def getReachable(x, y, n, m, maze):
@@ -58,6 +59,9 @@ def genMaze(x, y, n, m):
             aim_set = next_set.union(tmp_set)
 
         nx, ny = random.sample(aim_set, 1)[0]
+        printMaze(maze, ['  ', '  ', '##'], next_set, tmp_set)
+        time.sleep(0.1)
+        os.system('clear')
 
         if isVisitable(nx, ny, n, m, maze):
             if random.randint(1, 10) < 5:
